@@ -5,7 +5,8 @@
 class tree
 {
 private:
-    No *raiz;
+    No *raiz,*nulo;
+
 public:
     tree();
     bool inserir(Item*);
@@ -15,6 +16,7 @@ public:
     std::string mostrarposordem();
     std::string mostrarpreordem();
     bool vazia();
+private:
     No* minima(No*);
     No* maximo(No*);
     No* antecessor(No*);

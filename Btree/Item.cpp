@@ -2,7 +2,9 @@
 
 Item::Item()
 {
-
+    quanti=0;
+    valor=0;
+    nomeprod=codbarras="";
 }
 
 int Item::getquanti()

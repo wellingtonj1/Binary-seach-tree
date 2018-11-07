@@ -14,6 +14,9 @@ public:
     No* getpai();
     No* getfe();
     No* getfd();
+    void setpai(No *x){ pai=x; }
+    void setfe(No *x){ fe=x; }
+    void setfd(No *x){ fd=x; }
     static No* montano(Item*);
     static Item* desmontano(No*);
 };
