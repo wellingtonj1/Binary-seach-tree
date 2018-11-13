@@ -103,22 +103,52 @@ bool tree::vazia()
     return (raiz==nulo);
 }
 
-No* tree::minima(No*)
+No* tree::minima(No *pno)
 {
-
+    No *aux=pno;
+    while(aux->getfe()!=nulo)
+    {
+        aux=aux->getfe();
+    }
+    return aux;
 }
 
-No* tree::maximo(No*)
+No* tree::maximo(No *pno)
 {
-
+    No *aux=pno;
+    while(aux->getfd()!=nulo)
+    {
+        aux=aux->getfd();
+    }
+    return aux;
 }
 
-No* tree::antecessor(No*)
+No* tree::antecessor(No *pno)
 {
-
+    if(pno->getfe()!=nulo)
+    {
+        return maximo(pno->getfe());
+    }
+    No *aux=pno->getpai();
+    while (aux!=nulo && pno==aux->getfe())
+    {
+        pno=aux;
+        aux=aux->getpai();
+    }
+    return aux;
 }
 
-No* tree::sucessor(No*)
+No* tree::sucessor(No *pno)
 {
-
+    if(pno->getfd()!=nulo)
+    {
+        return minima(pno->getfd());
+    }
+    No *aux=pno->getpai();
+    while (aux!=nulo && pno==aux->getfd())
+    {
+        pno=aux;
+        aux=aux->getpai();
+    }
+    return aux;
 }
