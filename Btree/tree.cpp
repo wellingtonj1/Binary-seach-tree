@@ -50,8 +50,85 @@ bool tree::inserir(Item* aux)
     }
 }
 
-Item* tree::retirar(Item*)
+Item* tree::retirar(Item *aux)
 {
+    if(aux==0)
+    {
+        return 0;
+    }
+    No *ptr=raiz;
+    while (ptr!=nulo)
+    {
+        if(aux->getcodbarras()<ptr->getdados()->getcodbarras())
+        {
+            ptr=ptr->getfe();
+        }
+        else
+        {
+            if(aux->getcodbarras()>ptr->getdados()->getcodbarras())
+            {
+                ptr=ptr->getfd();
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+    if(ptr==nulo)
+    {
+        return 0;
+    }
+    Item *obj=new Item;
+    *obj=*ptr->getdados();
+    No *y=nulo;
+    No *x=nulo;
+    if(ptr->getfd()==nulo || ptr->getfe()==nulo)
+    {
+        y=ptr;
+    }
+    else
+    {
+        y=sucessor(ptr);
+    }
+    if(y->getfe()!=nulo)
+    {
+        x=y->getfe();
+    }
+    else
+    {
+        x=y->getfd();
+    }
+    if(x!=nulo)
+    {
+        x->setpai(y->getpai());
+    }
+    if(y->getpai()==nulo)
+    {
+        raiz=nulo;
+        if(x!=nulo)
+        {
+            x->setpai(nulo);
+        }
+    }
+    else
+    {
+        if(y==y->getpai()->getfe())
+        {
+            y->getpai()->setfe(x);
+        }
+        else
+        {
+            y->getpai()->setfd(x);
+        }
+    }
+    if(y!=ptr)
+    {
+        *ptr->getdados()=*y->getdados();
+    }
+
+    delete y;
+    return obj;
 
 }
 
