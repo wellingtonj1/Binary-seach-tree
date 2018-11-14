@@ -8,7 +8,10 @@ tree::tree()
 bool tree::inserir(Item* aux)
 {
     Item *trab=consultar(aux);
-    if(trab!=0)return false;
+    if(trab!=0)
+    {
+        return false;
+    }
     int de;
     No *ptr=No::montano(aux);
     if(vazia())
@@ -46,8 +49,9 @@ bool tree::inserir(Item* aux)
          {
              anterior->setfd(ptr);
          }
-         return true;
+
     }
+    return true;
 }
 
 Item* tree::retirar(Item *aux)
