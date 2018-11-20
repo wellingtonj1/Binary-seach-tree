@@ -12,9 +12,12 @@ public:
     bool inserir(Item*);
     Item* retirar(Item*);
     Item* consultar(Item*);
-    std::string mostrarordem();
-    std::string mostrarposordem();
-    std::string mostrarpreordem();
+    void mostrarordem(No* pNo,std::string &aux)const;
+    void mostrarordem(std::string &aux)const;
+    void mostrarpreordem(No* pNo,std::string &aux)const;
+    void mostrarpreordem(std::string &aux)const;
+    void mostrarposordem(std::string &aux)const;
+    void mostrarposordem(No* pNo,std::string &aux)const;
     bool vazia();
 private:
     No* minima(No*);

@@ -164,19 +164,51 @@ Item* tree::consultar(Item* aux)
     return copia;
 }
 
-std::string tree::mostrarordem()
+void tree::mostrarordem(No* pNo,std::string &aux)const
 {
+    if(pNo!=nulo)
+    {
+        mostrarordem(pNo->getfe(),aux);
+        aux+=pNo->getdados()->gettudo(); //ou getitem no lugar de gettudo
+        mostrarordem(pNo->getfd(),aux);
 
+    }
 }
 
-std::string tree::mostrarposordem()
+void tree::mostrarordem(std::string &aux)const
 {
-
+    mostrarordem(raiz,aux);
 }
 
-std::string tree::mostrarpreordem()
+void tree::mostrarpreordem(No* pNo,std::string &aux)const
 {
+    if(pNo!=nulo)
+    {
+        aux+=pNo->getdados()->gettudo(); //ou getitem no lugar de gettudo
+        mostrarordem(pNo->getfe(),aux);
+        mostrarordem(pNo->getfd(),aux);
 
+    }
+}
+
+void tree::mostrarpreordem(std::string &aux)const
+{
+    mostrarpreordem(raiz,aux);
+}
+
+void tree::mostrarposordem(std::string &aux)const
+{
+   mostrarposordem(raiz,aux);
+}
+
+void tree::mostrarposordem(No* pNo,std::string &aux)const
+{
+    if(pNo!=nulo)
+    {
+        mostrarordem(pNo->getfe(),aux);
+        mostrarordem(pNo->getfd(),aux);
+        aux+=pNo->getdados()->gettudo(); //ou getitem no lugar de gettudo
+    }
 }
 
 bool tree::vazia()
