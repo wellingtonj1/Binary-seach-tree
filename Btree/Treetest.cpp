@@ -7,9 +7,9 @@ Treetest::Treetest()
 void Treetest::Testtree()
 {
     objeto=new tree;
-    Item *aux;
+    Item *aux,auxbusc;
     int choose;
-
+    std::string buscabar;
     do
     {
         puts("< - Digite a opção que desejada - >");
@@ -41,6 +41,11 @@ void Treetest::Testtree()
             break;
 
         case 3://CONSULTAR
+
+            puts("Digite o codigo de barras que desejas encontrar : ");
+            std::getline(std::cin,buscabar);
+            aux->setcodbarras(buscabar);
+            auxbusc=tree.consultar(aux);
 
             break;
 
