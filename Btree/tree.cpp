@@ -2,18 +2,26 @@
 
 tree::tree()
 {
-    nulo=No::montano(0);
-    raiz=nulo;
+    raiz=nulo=No::montano(0);
+     std::cout<<raiz<<"\t"<<nulo<<"\n";
+
 }
 bool tree::inserir(Item* aux)
 {
+
+    if(aux==0)
+    {
+        return false;
+    }
     Item *trab=consultar(aux);
     if(trab!=0)
     {
         return false;
     }
+
     int de;
     No *ptr=No::montano(aux);
+
     if(vazia())
     {
         raiz=ptr;
@@ -22,6 +30,7 @@ bool tree::inserir(Item* aux)
         ptr->setfd(nulo);
         return true;
     }
+
     No* atual=raiz;
     No* anterior=raiz;
     while (atual!=nulo)
@@ -38,6 +47,7 @@ bool tree::inserir(Item* aux)
              atual=atual->getfd();
              de=1;
          }
+    }
          ptr->setfe(nulo);
          ptr->setfd(nulo);
          ptr->setpai(anterior);
@@ -50,7 +60,6 @@ bool tree::inserir(Item* aux)
              anterior->setfd(ptr);
          }
 
-    }
     return true;
 }
 
@@ -142,6 +151,7 @@ Item* tree::consultar(Item* aux)
     No* ptr =raiz;
     while (ptr!=nulo)
     {
+
         if(aux->getcodbarras()<ptr->getdados()->getcodbarras())
         {
             ptr=ptr->getfe();
@@ -158,7 +168,9 @@ Item* tree::consultar(Item* aux)
             }
         }
     }
+
     if(ptr==nulo) return 0;
+
     Item* copia= new Item;
     *copia=*ptr->getdados();
     return copia;

@@ -9,7 +9,7 @@ private:
 public:
     Treetest();
     void Testtree();
-
+    Item* criaitem();
 };
 
 #endif // TREETEST_H
