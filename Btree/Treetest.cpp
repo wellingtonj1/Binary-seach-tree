@@ -43,9 +43,10 @@ void Treetest::Testtree()
         case 3://CONSULTAR
 
             puts("Digite o codigo de barras que desejas encontrar : ");
+            std::cin.ignore();
             std::getline(std::cin,buscabar);
             aux->setcodbarras(buscabar);
-            auxbusc=tree.consultar(aux);
+            auxbusc=*objeto->consultar(aux);
 
             break;
 

@@ -3,8 +3,6 @@
 tree::tree()
 {
     raiz=nulo=No::montano(0);
-     std::cout<<raiz<<"\t"<<nulo<<"\n";
-
 }
 bool tree::inserir(Item* aux)
 {
