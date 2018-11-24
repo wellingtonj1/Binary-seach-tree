@@ -41,7 +41,7 @@ void Item::setnomeprod(std::string x)
 std::string Item::gettudo()
 {
     std::string aux;
-    aux="Nome produto "+nomeprod+"\nCodigo de barras "+codbarras+"\nPreço "+std::to_string(getpreco())+"\nQuantidade "+std::to_string(getquanti())+"\n";
+    aux="Nome produto "+nomeprod+"\nCodigo de barras "+codbarras+"\nPreço "+std::to_string(valor)+"\nQuantidade "+std::to_string(getquanti())+"\n";
     return aux;
 }
 std::string Item::getcodbarras()

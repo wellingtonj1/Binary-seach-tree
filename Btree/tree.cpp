@@ -143,7 +143,7 @@ Item* tree::retirar(Item *aux)
 
 }
 
-Item* tree::consultar(Item* aux)
+Item* tree::consultar(Item *aux)
 {
 
     if(aux==nullptr)
@@ -190,7 +190,6 @@ void tree::mostrarordem(No* pNo,std::string &aux)const
         mostrarordem(pNo->getfe(),aux);
         aux+=pNo->getdados()->gettudo(); //ou getitem no lugar de gettudo
         mostrarordem(pNo->getfd(),aux);
-
     }
 }
 

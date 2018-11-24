@@ -9,6 +9,7 @@ private:
     Item *dados;
 
 public:
+
     No();
     Item* getdados();
     No* getpai();
@@ -20,6 +21,7 @@ public:
     void setdados(Item *aux){ dados=aux; }
     static No* montano(Item*);
     static Item* desmontano(No*);
+
 };
 
 #endif // NO_H
