@@ -17,13 +17,14 @@ void Item::setquanti(int x)
     quanti=x;
 }
 
-float Item::getpreco()
+double Item::getpreco()
 {
+
     return valor;
 }
 
-void Item::setpreco(float x)
-{
+void Item::setpreco(double x)
+{  
     valor=x;
 }
 

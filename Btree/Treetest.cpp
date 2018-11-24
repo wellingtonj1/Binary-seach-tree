@@ -7,16 +7,15 @@ Treetest::Treetest()
 void Treetest::Testtree()
 {
     objeto=new tree;
-    Item *aux,auxbusc;
+    Item *aux = nullptr ,*auxbusc = nullptr;
     int choose;
-    std::string buscabar;
+    std::string buscabar="";
     do
     {
         puts("< - Digite a opção que desejada - >");
         puts("1 - INSERIR ");
         puts("2 - RETIRAR ");
         puts("3 - CONSULTAR ");
-        puts("4 - MOSTRAR ");
         puts("0 - SAIR ");
         printf("You choose [  ]\b\b\b");
         std::cin>>choose;
@@ -38,6 +37,21 @@ void Treetest::Testtree()
 
         case 2://RETIRAR
 
+            puts("Digite o codigo de barras que desejas remover : ");
+            std::cin.ignore();
+            std::getline(std::cin,buscabar);
+            auxbusc->setcodbarras(buscabar);
+
+            if(objeto->consultar(auxbusc)!=nullptr)
+            {
+                puts("REMOVIDO COM SUCESSO !!!");
+                std::cout<<objeto->retirar(auxbusc)->gettudo();
+            }
+            else
+            {
+                puts("Not found!!");
+            }
+
             break;
 
         case 3://CONSULTAR
@@ -45,12 +59,16 @@ void Treetest::Testtree()
             puts("Digite o codigo de barras que desejas encontrar : ");
             std::cin.ignore();
             std::getline(std::cin,buscabar);
-            aux->setcodbarras(buscabar);
-            auxbusc=*objeto->consultar(aux);
-
-            break;
-
-        case 4://MOSTRAR
+            auxbusc->setcodbarras(buscabar);
+            if(objeto->consultar(auxbusc)!=nullptr)
+            {
+                puts("Founded !!!");
+                std::cout<<objeto->consultar(auxbusc)->gettudo();
+            }
+            else
+            {
+                puts("Not found!!");
+            }
 
             break;
 
@@ -66,7 +84,7 @@ Item* Treetest::criaitem()
     Item *retorna=new Item;
     std::string nomeprod,codbarras;
     int quanti;
-    float valor;
+    double valor;
 
     puts("Digite o nome do produto : " );
     std::cin.ignore();
@@ -74,7 +92,7 @@ Item* Treetest::criaitem()
     retorna->setnomeprod(nomeprod);
 
     puts("Digite o numero do código de barras : " );
-    std::cin.ignore();
+    //std::cin.ignore();
     std::getline(std::cin,codbarras);
     retorna->setcodbarras(codbarras);
 

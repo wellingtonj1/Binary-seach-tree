@@ -28,9 +28,9 @@ No* No::montano(Item *aux)
 {
     No *ptr=new No;
     ptr->dados=aux;
-    ptr->pai=0;
-    ptr->fe=0;
-    ptr->fd=0;
+    ptr->pai=nullptr;
+    ptr->fe=nullptr;
+    ptr->fd=nullptr;
 
     return ptr;
 }

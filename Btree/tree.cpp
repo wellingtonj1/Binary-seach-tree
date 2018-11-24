@@ -2,22 +2,22 @@
 
 tree::tree()
 {
-    raiz=nulo=No::montano(0);
+    raiz=nulo=No::montano(nullptr);
 }
 bool tree::inserir(Item* aux)
 {
 
-    if(aux==0)
+    if(aux==nullptr)
     {
         return false;
     }
     Item *trab=consultar(aux);
-    if(trab!=0)
+    if(trab!=nullptr)
     {
         return false;
     }
 
-    int de;
+    int de = 0;
     No *ptr=No::montano(aux);
 
     if(vazia())
@@ -63,9 +63,9 @@ bool tree::inserir(Item* aux)
 
 Item* tree::retirar(Item *aux)
 {
-    if(aux==0)
+    if(aux==nullptr)
     {
-        return 0;
+        return nullptr;
     }
     No *ptr=raiz;
     while (ptr!=nulo)
@@ -88,7 +88,7 @@ Item* tree::retirar(Item *aux)
     }
     if(ptr==nulo)
     {
-        return 0;
+        return nullptr;
     }
     Item *obj=new Item;
     *obj=*ptr->getdados();
@@ -145,7 +145,12 @@ Item* tree::retirar(Item *aux)
 
 Item* tree::consultar(Item* aux)
 {
-    if(aux==0)return 0;
+
+    if(aux==nullptr)
+    {
+        return nullptr;
+    }
+
     No* ptr =raiz;
     while (ptr!=nulo)
     {
@@ -167,10 +172,14 @@ Item* tree::consultar(Item* aux)
         }
     }
 
-    if(ptr==nulo) return 0;
+    if(ptr==nulo)
+    {
 
-    Item* copia= new Item;
-    *copia=*ptr->getdados();
+        return nullptr;
+    }
+    Item* copia;
+    copia=ptr->getdados();
+
     return copia;
 }
 

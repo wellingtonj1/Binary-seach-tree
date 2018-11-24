@@ -2,20 +2,21 @@
 #define ITEM_H
 #include <iostream>
 #include <string>
+#include <iomanip>
 
 class Item
 {
 private:
     std::string nomeprod,codbarras;
     int quanti;
-    float valor;
+    double valor;
 
 public:
     Item();
     int getquanti();
     void setquanti(int);
-    float getpreco();
-    void setpreco(float);
+    double getpreco();
+    void setpreco(double);
     std::string getnomeprod();
     std::string getcodbarras();
     void setcodbarras(std::string);

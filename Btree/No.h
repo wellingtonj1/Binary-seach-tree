@@ -17,6 +17,7 @@ public:
     void setpai(No *x){ pai=x; }
     void setfe(No *x){ fe=x; }
     void setfd(No *x){ fd=x; }
+    void setdados(Item *aux){ dados=aux; }
     static No* montano(Item*);
     static Item* desmontano(No*);
 };
