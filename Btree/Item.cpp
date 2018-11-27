@@ -17,13 +17,15 @@ void Item::setquanti(int x)
     quanti=x;
 }
 
-double Item::getpreco()
+float Item::getpreco()
 {
-
+    std::cout.fixed;
+    std::setprecision(2);
+    //std::cout<<valor;
     return valor;
 }
 
-void Item::setpreco(double x)
+void Item::setpreco(float x)
 {  
     valor=x;
 }
@@ -41,7 +43,8 @@ void Item::setnomeprod(std::string x)
 std::string Item::gettudo()
 {
     std::string aux;
-    aux="Nome produto "+nomeprod+"\nCodigo de barras "+codbarras+"\nPreço "+std::to_string(valor)+"\nQuantidade "+std::to_string(getquanti())+"\n";
+
+    aux="Nome produto "+nomeprod+"\nCodigo de barras "+codbarras+"\nPreço "+std::to_string(getpreco())+"\nQuantidade "+std::to_string(getquanti())+"\n";
     return aux;
 }
 std::string Item::getcodbarras()

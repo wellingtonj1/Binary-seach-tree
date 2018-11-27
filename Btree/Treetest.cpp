@@ -13,19 +13,29 @@ void Treetest::Testtree()
     std::string coddebar="",mostra="";
     do
     {
-        puts("< - Digite a opção que desejada - >");
+
+        puts("< - Digite a opção desejada - >");
         puts("1 - INSERIR ");
         puts("2 - RETIRAR ");
         puts("3 - CONSULTAR ");
-        puts("4 - MOSTRAR ");
+        puts("4 - MOSTRAR EM ORDEM");
+        puts("5 - MOSTRAR PÓS ORDEM");
+        puts("6 - MOSTRAR PRÉ ORDEM");
         puts("0 - SAIR ");
         printf("You choose [  ]\b\b\b");
         std::cin>>choose;
-
+        //system("clear");
         switch (choose) {
+
+        case 0:
+            puts("Programa finalizado com sucesso!!! ");
+
+            break;
+
         case 1://INSERIR
 
             aux=criaitem();
+
             if(objeto->inserir(aux))
             {
                 puts("Sucesso!!");
@@ -46,8 +56,8 @@ void Treetest::Testtree()
 
             if(objeto->consultar(buscaaux)!=nullptr)
             {
-                puts("REMOVIDO COM SUCESSO !!!");
                 std::cout<<objeto->retirar(buscaaux)->gettudo();
+                puts("REMOVIDO COM SUCESSO !!!");
             }
             else
             {
@@ -66,6 +76,7 @@ void Treetest::Testtree()
             if(objeto->consultar(buscaaux)!=nullptr)
             {
                 puts("Founded !!!");
+                std::cout<<std::setprecision(2);
                 std::cout<<objeto->consultar(buscaaux)->gettudo();
             }
             else
@@ -79,7 +90,23 @@ void Treetest::Testtree()
 
             objeto->mostrarordem(mostra);
             std::cout<<mostra<<std::endl;
+            mostra="";
             break;
+
+        case 5:
+
+            objeto->mostrarposordem(mostra);
+            std::cout<<mostra<<std::endl;
+            mostra="";
+            break;
+
+        case 6:
+
+            objeto->mostrarpreordem(mostra);
+            std::cout<<mostra<<std::endl;
+            mostra="";
+            break;
+
         default:
             break;
         }
@@ -93,7 +120,7 @@ Item* Treetest::criaitem()
     std::string nomeprod;
     std::string codbarras;
     int quanti;
-    double valor;
+    float valor;
 
     puts("Digite o nome do produto : " );
     std::cin.ignore();

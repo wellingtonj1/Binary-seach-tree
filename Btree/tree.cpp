@@ -6,7 +6,6 @@ tree::tree()
 }
 bool tree::inserir(Item* aux)
 {
-
     if(aux==nullptr)
     {
         return false;
@@ -38,8 +37,9 @@ bool tree::inserir(Item* aux)
              anterior=atual;
              atual=atual->getfe();
              de=0;
+
          }
-         if(ptr->getdados()->getcodbarras()>atual->getdados()->getcodbarras())
+         else
          {
              anterior=atual;
              atual=atual->getfd();
@@ -94,7 +94,7 @@ Item* tree::retirar(Item *aux)
     *obj=*ptr->getdados();
     No *y=nulo;
     No *x=nulo;
-    if(ptr->getfd()==nulo || ptr->getfe()==nulo)
+    if(ptr->getfd()==nulo && ptr->getfe()==nulo)
     {
         y=ptr;
     }
@@ -188,13 +188,17 @@ void tree::mostrarordem(No* pNo,std::string &aux)const
     if(pNo!=nulo)
     {
         mostrarordem(pNo->getfe(),aux);
-        aux+=pNo->getdados()->gettudo(); //ou getitem no lugar de gettudo
+        aux+=pNo->getdados()->gettudo()+"\n"; //ou getitem no lugar de gettudo
         mostrarordem(pNo->getfd(),aux);
     }
 }
 
 void tree::mostrarordem(std::string &aux)const
 {
+    if(raiz==nulo)
+    {
+        puts("Nada encontrado!");
+    }
     mostrarordem(raiz,aux);
 }
 
@@ -202,20 +206,28 @@ void tree::mostrarpreordem(No* pNo,std::string &aux)const
 {
     if(pNo!=nulo)
     {
-        aux+=pNo->getdados()->gettudo(); //ou getitem no lugar de gettudo
-        mostrarordem(pNo->getfe(),aux);
-        mostrarordem(pNo->getfd(),aux);
+        aux+=pNo->getdados()->gettudo()+"\n"; //ou getitem no lugar de gettudo
+        mostrarpreordem(pNo->getfe(),aux);
+        mostrarpreordem(pNo->getfd(),aux);
 
     }
 }
 
 void tree::mostrarpreordem(std::string &aux)const
 {
+    if(raiz==nulo)
+    {
+        puts("Nada encontrado!");
+    }
     mostrarpreordem(raiz,aux);
 }
 
 void tree::mostrarposordem(std::string &aux)const
 {
+   if(raiz==nulo)
+   {
+       puts("Nada encontrado!");
+   }
    mostrarposordem(raiz,aux);
 }
 
@@ -223,9 +235,9 @@ void tree::mostrarposordem(No* pNo,std::string &aux)const
 {
     if(pNo!=nulo)
     {
-        mostrarordem(pNo->getfe(),aux);
-        mostrarordem(pNo->getfd(),aux);
-        aux+=pNo->getdados()->gettudo(); //ou getitem no lugar de gettudo
+        mostrarposordem(pNo->getfe(),aux);
+        mostrarposordem(pNo->getfd(),aux);
+        aux+=pNo->getdados()->gettudo()+"\n"; //ou getitem no lugar de gettudo
     }
 }
 
