@@ -58,6 +58,7 @@ void Treetest::Testtree()
             {
                 std::cout<<objeto->retirar(buscaaux)->gettudo();
                 puts("REMOVIDO COM SUCESSO !!!");
+                delete buscaaux;
             }
             else
             {

@@ -6,140 +6,88 @@ tree::tree()
 }
 bool tree::inserir(Item* aux)
 {
-    if(aux==nullptr)
+    if(!aux) return false;
+    No *at = raiz, *an = raiz;
+    while(at!=nulo)
     {
-        return false;
+        if(aux->getcodbarras() < at->getdados()->getcodbarras())
+        {
+            an = at;
+            at = at->getfe();
+        }
+        else
+        {
+            if(aux->getcodbarras() > at->getdados()->getcodbarras())
+            {
+                an = at;
+                at = at->getfd();
+            }
+            else
+                return false;
+        }
     }
-    Item *trab=consultar(aux);
-    if(trab!=nullptr)
+    No *novo = No::montano(aux);
+    novo->setfe(nulo);
+    novo->setfd(nulo);
+    if(an == nulo)
     {
-        return false;
+        raiz = novo;
+        novo->setpai(nulo);
     }
-
-    int de = 0;
-    No *ptr=No::montano(aux);
-
-    if(vazia())
+    else
     {
-        raiz=ptr;
-        ptr->setpai(nulo);
-        ptr->setfe(nulo);
-        ptr->setfd(nulo);
-        return true;
+        novo->setpai(an);
+        if(aux->getcodbarras() < an->getdados()->getcodbarras())
+            an->setfe(novo);
+        else
+            an->setfd(novo);
     }
-
-    No* atual=raiz;
-    No* anterior=raiz;
-    while (atual!=nulo)
-    {
-         if(ptr->getdados()->getcodbarras()<atual->getdados()->getcodbarras())
-         {
-             anterior=atual;
-             atual=atual->getfe();
-             de=0;
-
-         }
-         else
-         {
-             anterior=atual;
-             atual=atual->getfd();
-             de=1;
-         }
-    }
-         ptr->setfe(nulo);
-         ptr->setfd(nulo);
-         ptr->setpai(anterior);
-         if(de==0)
-         {
-             anterior->setfe(ptr);
-         }
-         if(de==1)
-         {
-             anterior->setfd(ptr);
-         }
-
+    corrigir_violacao(at,at->getpai());
     return true;
 }
 
-Item* tree::retirar(Item *aux)
+Item* tree::retirar(Item *obj)
 {
-    if(aux==nullptr)
+    No * z = pesq(obj);
+    Item * aux = 0;
+    if(z != nulo)
     {
-        return nullptr;
-    }
-    No *ptr=raiz;
-    while (ptr!=nulo)
-    {
-        if(aux->getcodbarras()<ptr->getdados()->getcodbarras())
+        aux = new Item;
+        * aux = * z->getdados();
+        No * y = nulo;
+        No * x = nulo;
+
+        if(z->getfd() == nulo || z->getfe() == nulo)
         {
-            ptr=ptr->getfe();
+            y = z ;
         }
         else
         {
-            if(aux->getcodbarras()>ptr->getdados()->getcodbarras())
+            y = sucessor(z) ;
+        }
+
+        if(y->getpai() == nulo)
+        {
+            raiz = x;
+            if(x != nulo){x->setpai(nulo);}
+        }
+        else{
+            if(y==y->getpai()->getfe())
             {
-                ptr=ptr->getfd();
+                y->getpai()->setfe(x);
             }
             else
             {
-                break;
+                y->getpai()->setfd(x);
             }
         }
-    }
-    if(ptr==nulo)
-    {
-        return nullptr;
-    }
-    Item *obj=new Item;
-    *obj=*ptr->getdados();
-    No *y=nulo;
-    No *x=nulo;
-    if(ptr->getfd()==nulo && ptr->getfe()==nulo)
-    {
-        y=ptr;
-    }
-    else
-    {
-        y=sucessor(ptr);
-    }
-    if(y->getfe()!=nulo)
-    {
-        x=y->getfe();
-    }
-    else
-    {
-        x=y->getfd();
-    }
-    if(x!=nulo)
-    {
-        x->setpai(y->getpai());
-    }
-    if(y->getpai()==nulo)
-    {
-        raiz=nulo;
-        if(x!=nulo)
-        {
-            x->setpai(nulo);
-        }
-    }
-    else
-    {
-        if(y==y->getpai()->getfe())
-        {
-            y->getpai()->setfe(x);
-        }
-        else
-        {
-            y->getpai()->setfd(x);
-        }
-    }
-    if(y!=ptr)
-    {
-        *ptr->getdados()=*y->getdados();
+        if(y!=z){*z->getdados() = *y->getdados() ; }
+        this->corrigir_violacao(z,z->getpai());
+        delete y;
+        return aux;
     }
 
-    delete y;
-    return obj;
+        return aux;
 
 }
 
@@ -174,13 +122,37 @@ Item* tree::consultar(Item *aux)
 
     if(ptr==nulo)
     {
-
         return nullptr;
     }
     Item* copia;
     copia=ptr->getdados();
 
     return copia;
+}
+
+No* tree::pesq(Item *obj)
+{
+    No * aux = raiz;
+    while(aux != nulo)
+    {
+        if(obj->getcodbarras()<aux->getdados()->getcodbarras())
+        {
+            aux = aux->getfe();
+        }
+        else
+        {
+            if(obj->getcodbarras()>aux->getdados()->getcodbarras())
+            {
+                aux = aux->getfd();
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    return aux;
 }
 
 void tree::mostrarordem(No* pNo,std::string &aux)const
@@ -248,7 +220,11 @@ bool tree::vazia()
 
 No* tree::minima(No *pno)
 {
-    No *aux=pno;
+    if(pno== nulo)
+    {
+        return nulo;
+    }
+    No *aux=nulo;
     while(aux->getfe()!=nulo)
     {
         aux=aux->getfe();
@@ -258,7 +234,11 @@ No* tree::minima(No *pno)
 
 No* tree::maximo(No *pno)
 {
-    No *aux=pno;
+    if(pno==nulo)
+    {
+        return nulo;
+    }
+    No *aux=nulo;
     while(aux->getfd()!=nulo)
     {
         aux=aux->getfd();
@@ -268,14 +248,19 @@ No* tree::maximo(No *pno)
 
 No* tree::antecessor(No *pno)
 {
+    if(pno==nulo)
+    {
+        return nulo;
+    }
     if(pno->getfe()!=nulo)
     {
         return maximo(pno->getfe());
     }
     No *aux=pno->getpai();
-    while (aux!=nulo && pno==aux->getfe())
+    No *an= aux;
+    while(aux->getfe()==an && aux!=nulo)
     {
-        pno=aux;
+        an=aux;
         aux=aux->getpai();
     }
     return aux;
@@ -288,10 +273,154 @@ No* tree::sucessor(No *pno)
         return minima(pno->getfd());
     }
     No *aux=pno->getpai();
-    while (aux!=nulo && pno==aux->getfd())
+    No *an=aux;
+    while (aux->getfd()==an && aux!=nulo)
     {
-        pno=aux;
+        an=aux;
         aux=aux->getpai();
     }
     return aux;
+}
+
+void tree::testaIntegridade(No *p, std::string &aux)
+{
+    if(p==nulo || p == 0)
+    {
+        return;
+    }
+    if(p->getfe() != nulo)
+    {
+        if(p->getdados()->getcodbarras() < p->getfe()->getdados()->getcodbarras())
+        {
+            aux = aux + " Erro!! Pai: \n"+p->getdados()->gettudo();
+            aux = aux + " menor que filho à esquerda: \n"+p->getfe()->getdados()->gettudo();
+        }
+    }
+    if(p->getfd() != nulo)
+    {
+        if(p->getdados()->getcodbarras() > p->getfd()->getdados()->getcodbarras())
+        {
+            aux = aux + " Erro!! Pai: \n"+p->getdados()->gettudo();
+            aux = aux + " maior que filho à direita: \n"+p->getfd()->getdados()->gettudo();
+        }
+    }
+    testaIntegridade(p->getfe(),aux);
+    testaIntegridade(p->getfd(),aux);
+}
+
+void tree::rotacao_esquerda(No *node)
+{
+    No *pai = node->getpai();
+    No *aux = node->getfd();
+
+    if(pai->getfd() == node)
+    {
+        pai->setfd(aux);
+        node->setpai(aux);
+        node->setfd(aux->getfe());
+        aux->setfe(node);
+    }else
+    {
+        pai->setfe(aux);
+        node->setpai(aux);
+        node->setfd(aux->getfe());
+        aux->setfe(node);
+
+    }
+}
+
+void tree::rotacao_direita(No *node)
+{
+    No *pai = node->getpai();
+    No *aux = node->getfe();
+
+    if(pai->getfd() == node)
+    {
+        pai->setfd(aux);
+        node->setpai(aux);
+        node->setfe(aux->getfd());
+        aux->setfd(node);
+
+    }else
+    {
+        pai->setfe(aux);
+        node->setpai(aux);
+        node->setfe(aux->getfd());
+        aux->setfd(node);
+    }
+}
+
+void tree::corrigir_violacao(No *node, No *root)
+{
+    No *pai = NULL;
+    No *vo = NULL;
+
+    while ((node != root) && (node->getCor() != BLACK) &&
+           (node->getpai()->getCor() == RED))
+    {
+
+        pai = vo->getpai();
+        vo = vo->getpai()->getpai();
+
+        if (pai == vo->getfe())
+        {
+
+            No *tio = vo->getfd();
+            if (tio != NULL && tio->getCor() == RED)
+            {
+                vo->setCor(RED);
+                pai->setCor(BLACK);
+                tio->setCor(BLACK);
+                node = vo;
+            }
+            else
+            {
+                if (node == vo->getfd())
+                {
+                    rotacao_esquerda(pai);
+                    node = pai;
+                    pai = node->getpai();
+                }
+
+                rotacao_direita(vo);
+                bool cor = pai->getCor();
+                pai->setCor(vo->getCor());
+                vo->setCor(cor);
+
+
+
+                node = pai;
+            }
+        }
+
+        else
+        {
+            No *tio = vo->getfe();
+
+            if ((tio != NULL) && (tio->getCor() == RED))
+            {
+                vo->setCor(RED);
+                pai->setCor(BLACK);
+                tio->setCor(BLACK);
+                node = vo;
+            }
+            else
+            {
+
+                if (node == pai->getfe())
+                {
+                    rotacao_direita(pai);
+                    node = pai;
+                    pai = node->getpai();
+                }
+
+                rotacao_esquerda(vo);
+                bool cor = pai->getCor();
+                pai->setCor(vo->getCor());
+                vo->setCor(cor);
+
+                node = pai;
+            }
+        }
+    }
 }
